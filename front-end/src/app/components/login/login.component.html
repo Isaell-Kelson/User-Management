@@ -1,0 +1,45 @@
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-body">
+          <h3 class="card-title text-center">{{ isRegister ? 'Cadastro' : 'Login' }}</h3>
+          <form *ngIf="!isRegister" (ngSubmit)="onLogin()">
+            <div class="form-group">
+              <label for="login-email">Email</label>
+              <input type="email" class="form-control" id="login-email" [(ngModel)]="email" name="email" required>
+            </div>
+            <div class="form-group">
+              <label for="login-password">Senha</label>
+              <input type="password" class="form-control" id="login-password" [(ngModel)]="password" name="password" required>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Login</button>
+            <button type="button" class="btn btn-link btn-block" (click)="toggleForm()">Cadastrar</button>
+          </form>
+          <form *ngIf="isRegister" (ngSubmit)="onRegister()">
+            <div class="form-group">
+              <label for="register-name">Nome</label>
+              <input type="text" class="form-control" id="register-name" [(ngModel)]="name" name="name" required>
+            </div>
+            <div class="form-group">
+              <label for="register-email">Email</label>
+              <input type="email" class="form-control" id="register-email" [(ngModel)]="email" name="email" required>
+            </div>
+            <div class="form-group">
+              <label for="register-password">Senha</label>
+              <input type="password" class="form-control" id="register-password" [(ngModel)]="password" name="password" required>
+            </div>
+            <div class="form-group">
+              <label for="register-status">Status</label>
+              <select class="form-control" id="register-status" [(ngModel)]="status" name="status">
+                <option value="ativo">Ativo</option>
+              </select>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Cadastrar</button>
+            <button type="button" class="btn btn-link btn-block" (click)="toggleForm()">Voltar ao Login</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
