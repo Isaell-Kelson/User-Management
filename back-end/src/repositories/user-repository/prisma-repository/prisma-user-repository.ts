@@ -24,7 +24,9 @@ export class PrismaUserRepository implements UserRepository {
             },
         });
 
-        return user ? new User(user) : null;
+        if (!user) return null;
+
+        return PrismaUserMapper.toDomain(user)
     }
 
 }
