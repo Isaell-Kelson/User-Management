@@ -8,7 +8,7 @@ interface CreateUserRequest {
     name: string;
     email: string;
     password: string;
-    status: true;
+    status?: true;
     role: string;
 }
 
@@ -30,7 +30,7 @@ export class CreateUserUseCase {
             name,
             email,
             password: hashedPassword,
-            status,
+            status: status ?? true,
             role,
             updatedAt: new Date(),
         });

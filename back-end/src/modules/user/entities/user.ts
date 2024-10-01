@@ -5,15 +5,15 @@ interface UserSchema {
     name: string;
     email: string;
     password: string;
-    status: true;
+    status: boolean;
     role: string;
     createdAt: Date;
     updatedAt: Date;
 }
 
 export class User {
-    props: UserSchema;
-    _id: string;
+    private props: UserSchema;
+    private readonly _id: string;
 
     constructor(props: Replace<UserSchema, { createdAt?: Date }>, id?: string) {
         this.props = {
@@ -51,11 +51,11 @@ export class User {
         this.password = password;
     }
 
-    get status(): true {
+    get status(): boolean {
         return this.props.status;
     }
 
-    set status(status: string) {
+    set status(status: boolean) {
         this.status = status;
     }
 
