@@ -14,4 +14,16 @@ export class InMemoryUserRepository implements UserRepository {
         const user = this.users.find(user => user.email === email); // Encontra o usuário pelo email
         return user || null; // Retorna o usuário encontrado ou null se não existir
     }
+
+    async delete(id: string): Promise<void> {
+        this.users = this.users.filter(user => user.id !== id); // Filtra os usuários que não possuem o id passado
+    }
+
+    changeRole(id: string, newRole: string): Promise<User> {
+        throw new Error("Method not implemented.");
+    }
+
+    update(id: string, userData: Partial<User>): Promise<User> {
+        throw new Error("Method not implemented.");
+    }
 }

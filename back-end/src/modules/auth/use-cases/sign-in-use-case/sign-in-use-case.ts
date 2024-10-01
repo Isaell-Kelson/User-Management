@@ -17,6 +17,7 @@ export class SignInUseCase {
             sub: user.id,
             email: user.email,
             name: user.name,
+            role: user.role,
             created_at: user.createdAt.toJSON()
         };
 

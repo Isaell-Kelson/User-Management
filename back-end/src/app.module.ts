@@ -4,9 +4,10 @@ import {DatabaseModule} from "./database/database.module";
 import {AuthModule} from "./http/auth/auth.module";
 import {JwtAuthGuard} from "./http/auth/guards/jwt-auth.guard";
 import {APP_GUARD} from "@nestjs/core";
+import {SeedsModule} from "./seeds/seed.module";
 
 @Module({
-    imports: [UserModule, DatabaseModule, AuthModule],
+    imports: [UserModule, DatabaseModule, AuthModule, SeedsModule],
     controllers: [],
     providers: [
         {

@@ -1,5 +1,4 @@
 import {IsNotEmpty, IsString, IsEmail, MinLength, IsBoolean} from 'class-validator'
-
 export class CreateUserBody {
     @IsNotEmpty()
     @IsString()
@@ -7,12 +6,11 @@ export class CreateUserBody {
 
     @IsNotEmpty()
     @IsString()
-    @IsEmail()
     email: string;
 
     @IsString()
     @IsNotEmpty()
-    @MinLength(6)
+    @MinLength(5)
     password: string;
 
     @IsNotEmpty()
@@ -20,6 +18,11 @@ export class CreateUserBody {
     status: true;
 
     @IsNotEmpty()
+    @IsString()
+    role: string;
+}
+
+export class ChangeUserRoleDto {
     @IsString()
     role: string;
 }

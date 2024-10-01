@@ -14,11 +14,9 @@ interface CreateUserRequest {
 
 @Injectable()
 export class CreateUserUseCase {
-    constructor(private userRepository: UserRepository) {
-    }
+    constructor(private userRepository: UserRepository) {}
 
-    async execute({name, email, password, status, role}: CreateUserRequest) {
-
+    async execute({ name, email, password, status, role }: CreateUserRequest) {
         const existingUser = await this.userRepository.findByEmail(email);
         if (existingUser) {
             throw new EmailAlreadyExistsError(email);
@@ -32,7 +30,6 @@ export class CreateUserUseCase {
             password: hashedPassword,
             status: status ?? true,
             role,
-            updatedAt: new Date(),
         });
 
         await this.userRepository.create(user);
@@ -40,3 +37,4 @@ export class CreateUserUseCase {
         return user;
     }
 }
+

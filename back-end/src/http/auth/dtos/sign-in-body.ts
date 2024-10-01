@@ -4,11 +4,10 @@ export class SignInBody {
 
     @IsNotEmpty()
     @IsString()
-    @IsEmail()
     email: string;
 
     @IsString()
     @IsNotEmpty()
-    @MinLength(6)
+    @MinLength(5)
     password: string;
 }

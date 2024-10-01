@@ -29,4 +29,36 @@ export class PrismaUserRepository implements UserRepository {
         return PrismaUserMapper.toDomain(user)
     }
 
+    async delete(id: string): Promise<void> {
+        await this.prisma.user.delete({
+            where: {
+                id: id,
+            },
+        });
+    }
+
+    async update(id: string, userData: Partial<User>): Promise<User> {
+        const user = await this.prisma.user.update({
+            where: {
+                id: id,
+            },
+            data: userData,
+        });
+
+        return PrismaUserMapper.toDomain(user);
+    }
+
+    async changeRole(id: string, newRole: string): Promise<User> {
+        const user = await this.prisma.user.update({
+            where: {
+                id: id,
+            },
+            data: {
+                role: newRole,
+            },
+        });
+
+        return PrismaUserMapper.toDomain(user);
+    }
+
 }

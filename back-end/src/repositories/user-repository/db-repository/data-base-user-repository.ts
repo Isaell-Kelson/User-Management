@@ -14,4 +14,17 @@ export class DataBaseUserRepository implements UserRepository {
         return user || null;
     }
 
+    async delete(id: string): Promise<void> {
+        this.users = this.users.filter(user => user.id !== id);
+    }
+
+    changeRole(id: string, newRole: string): Promise<User> {
+        throw new Error("Method not implemented.");
+    }
+
+    update(id: string, userData: Partial<User>): Promise<User> {
+        throw new Error("Method not implemented.");
+    }
+
+
 }
