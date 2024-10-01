@@ -1,5 +1,5 @@
 export type Replace<OriginalType, ReplaceTypes> = Omit<
-    OriginalType,
-    keyof ReplaceTypes
+  OriginalType,
+  keyof ReplaceTypes
 > &
-    ReplaceTypes
+  ReplaceTypes;
