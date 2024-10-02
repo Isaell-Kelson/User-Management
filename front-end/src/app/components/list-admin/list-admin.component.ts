@@ -37,7 +37,6 @@ export class ListAdminComponent implements OnInit {
   users: User[] = [];
   private _user: User | null = null;
   notification: { message: string; success: boolean } | null = null;
-  private token: string = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJlNjE0ZDIzNy0xOWQwLTQ5MGQtOTQ1Yi0yYzA4OTI4NzU2MmUiLCJlbWFpbCI6ImFkbWluIiwibmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiY3JlYXRlZF9hdCI6IjIwMjQtMTAtMDFUMTg6NTU6MjEuNjA0WiIsImlhdCI6MTcyNzg3NzU0NywiZXhwIjoxNzI5NjA1NTQ3fQ.yB1i4ri84tthFJDtIbw7rkXADknporZn581mIxIDVjA';
   editingUserId: string | null = null;
 
   constructor() {
@@ -47,11 +46,17 @@ export class ListAdminComponent implements OnInit {
     await this.fetchUsers();
   }
 
+  // Método para obter o token do localStorage
+  private getToken(): string | null {
+    return localStorage.getItem('token');
+  }
+
   async fetchUsers() {
     try {
+      const token = this.getToken();
       const response = await axios.get('http://localhost:3000/users/list', {
         headers: {
-          'Authorization': `Bearer ${this.token}`
+          'Authorization': `Bearer ${token}`
         }
       });
 
@@ -65,7 +70,7 @@ export class ListAdminComponent implements OnInit {
       console.log('Usuários processados:', this.users);
     } catch (error) {
       console.error('Erro ao buscar usuários:', error);
-      this.notification = {message: 'Erro ao buscar usuários', success: false};
+      this.notification = {message: 'Você não é um administrador', success: false};
     }
   }
 
@@ -75,9 +80,10 @@ export class ListAdminComponent implements OnInit {
 
   async saveUser(user: User) {
     try {
+      const token = this.getToken();
       await axios.put(`http://localhost:3000/users/${user.id}`, user, {
         headers: {
-          'Authorization': `Bearer ${this.token}`
+          'Authorization': `Bearer ${token}`
         }
       });
       this.notification = {message: 'Usuário atualizado com sucesso.', success: true};
@@ -91,9 +97,10 @@ export class ListAdminComponent implements OnInit {
   async toggleUserStatus(user: User) {
     try {
       const updatedStatus = !user.status;
+      const token = this.getToken();
       await axios.put(`http://localhost:3000/users/${user.id}`, {status: updatedStatus}, {
         headers: {
-          'Authorization': `Bearer ${this.token}`
+          'Authorization': `Bearer ${token}`
         }
       });
       user.status = updatedStatus;
@@ -106,9 +113,10 @@ export class ListAdminComponent implements OnInit {
 
   async deleteUser(id: string) {
     try {
+      const token = this.getToken();
       await axios.delete(`http://localhost:3000/users/${id}`, {
         headers: {
-          'Authorization': `Bearer ${this.token}`
+          'Authorization': `Bearer ${token}`
         }
       });
       this.users = this.users.filter(user => user.id !== id);

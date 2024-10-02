@@ -47,6 +47,7 @@ export class LoginComponent {
   }
 
   async onLogin() {
+
     if (!this.validateFields()) return;
 
     try {
@@ -54,6 +55,15 @@ export class LoginComponent {
         email: this.email,
         password: this.password
       });
+
+      // Acessando o token retornado pela API
+      const token = response.data.access_token;
+      if (token) {
+        console.log('Token recebido:', token);
+        // Armazenando o token no localStorage
+        localStorage.setItem('token', token);
+      }
+
       await this.router.navigate(['/home']);
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -65,6 +75,7 @@ export class LoginComponent {
       console.error('Erro no login', error);
     }
   }
+
 
   async onRegister() {
     if (!this.validateFields()) return;
