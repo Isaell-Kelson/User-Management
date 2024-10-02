@@ -3,20 +3,21 @@ import {
   HttpCode,
   HttpStatus,
   Post,
-  UseGuards,
   Request,
-  Get,
+  UseGuards,
 } from '@nestjs/common';
 import { AuthRequestModel } from './models/auth-request-model';
 import { SignInUseCase } from '../../modules/auth/use-cases/sign-in-use-case/sign-in-use-case';
-import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 import { Public } from './decorator/is-public';
-import { AuthenticatedRequestModel } from './models/authenticated-request-model';
+import { UsersService } from '../../modules/user/user.service';
 
 @Controller()
 export class AuthController {
-  constructor(private signUseCase: SignInUseCase) {}
+  constructor(
+    private signUseCase: SignInUseCase,
+    private usersService: UsersService, // Injetando o UsersService aqui
+  ) {}
 
   @Public()
   @HttpCode(HttpStatus.OK)
@@ -26,13 +27,12 @@ export class AuthController {
     const access_token = await this.signUseCase.execute({
       user: request.user,
     });
-    console.log('Token gerado:', access_token);
     return { access_token };
   }
 
-  @Get('test')
-  @UseGuards(JwtAuthGuard)
-  async test(@Request() request: AuthenticatedRequestModel) {
-    return request.user;
-  }
+  // @Get('test')
+  // @UseGuards(JwtAuthGuard)
+  // async test(@Request() request: AuthenticatedRequestModel) {
+  //   return request.user;
+  // }
 }

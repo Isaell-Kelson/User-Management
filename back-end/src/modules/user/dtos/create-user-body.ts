@@ -1,10 +1,5 @@
-import {
-  IsNotEmpty,
-  IsString,
-  IsEmail,
-  MinLength,
-  IsBoolean,
-} from 'class-validator';
+import { IsBoolean, IsNotEmpty, IsString, MinLength } from 'class-validator';
+
 export class CreateUserBody {
   @IsNotEmpty()
   @IsString()
@@ -29,6 +24,7 @@ export class CreateUserBody {
 }
 
 export class ChangeUserRoleDto {
+  @IsNotEmpty()
   @IsString()
   role: string;
 }

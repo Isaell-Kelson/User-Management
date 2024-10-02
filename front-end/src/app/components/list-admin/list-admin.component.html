@@ -13,13 +13,28 @@
     <tbody>
     <tr *ngFor="let user of users">
       <td>{{ user.id }}</td>
-      <td>{{ user.name }}</td>
-      <td>{{ user.email }}</td>
-      <td>{{ user.active ? 'Ativo' : 'Inativo' }}</td>
       <td>
-        <button class="btn btn-primary btn-sm" (click)="editUser(user)">Editar</button>
+        <ng-container *ngIf="editingUserId === user.id; else viewMode">
+          <input type="text" [(ngModel)]="user.name" class="form-control" />
+        </ng-container>
+        <ng-template #viewMode>
+          {{ user.name }}
+        </ng-template>
+      </td>
+      <td>
+        <ng-container *ngIf="editingUserId === user.id; else viewModeEmail">
+          <input type="email" [(ngModel)]="user.email" class="form-control" />
+        </ng-container>
+        <ng-template #viewModeEmail>
+          {{ user.email }}
+        </ng-template>
+      </td>
+      <td>{{ user.status ? 'Ativo' : 'Inativo' }}</td>
+      <td>
+        <button *ngIf="editingUserId === user.id" class="btn btn-success btn-sm" (click)="saveUser(user)">Salvar</button>
+        <button *ngIf="editingUserId !== user.id" class="btn btn-primary btn-sm" (click)="editUser(user)">Editar</button>
         <button class="btn btn-warning btn-sm" (click)="toggleUserStatus(user)">
-          {{ user.active ? 'Desativar' : 'Ativar' }}
+          {{ user.status ? 'Desativar' : 'Ativar' }}
         </button>
         <button class="btn btn-danger btn-sm" (click)="deleteUser(user.id)">Excluir</button>
       </td>

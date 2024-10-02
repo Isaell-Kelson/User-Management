@@ -1,8 +1,8 @@
 import {
-  Injectable,
   CanActivate,
   ExecutionContext,
   ForbiddenException,
+  Injectable,
 } from '@nestjs/common';
 import { AuthenticatedRequestModel } from '../models/authenticated-request-model';
 
@@ -16,16 +16,15 @@ export class RolesGuard implements CanActivate {
       .getRequest<AuthenticatedRequestModel>();
     const user = request.user;
 
-    console.log('Usuário:', user); // Log para verificar o usuário
-    console.log('Papel esperado:', this.expectedRole); // Log para verificar o papel esperado
+    console.log('Usuário:', user);
+    console.log('Papel esperado:', this.expectedRole);
 
-    // Verifique se o usuário existe e se o papel é 'admin' ou igual ao esperado
     if (!user || (user.role !== this.expectedRole && user.role !== 'admin')) {
       throw new ForbiddenException(
         'Acesso negado. Apenas administradores podem realizar esta ação.',
       );
     }
 
-    return true; // Permite o acesso se o papel estiver correto
+    return true;
   }
 }

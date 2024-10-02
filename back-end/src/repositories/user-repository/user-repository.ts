@@ -10,4 +10,6 @@ export abstract class UserRepository {
   abstract update(id: string, userData: Partial<User>): Promise<User>;
 
   abstract changeRole(id: string, newRole: string): Promise<User>;
+
+  abstract findAll(): Promise<User[]>;
 }

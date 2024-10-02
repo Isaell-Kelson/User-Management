@@ -24,4 +24,8 @@ export class DataBaseUserRepository implements UserRepository {
   update(id: string, userData: Partial<User>): Promise<User> {
     throw new Error('Method not implemented.');
   }
+
+  findAll(): Promise<User[]> {
+    return Promise.resolve([]);
+  }
 }

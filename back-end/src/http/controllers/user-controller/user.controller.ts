@@ -1,12 +1,15 @@
 import {
   Body,
   Controller,
-  Post,
   Delete,
-  Put,
+  Get,
   Param,
-  UseGuards,
+  Post,
+  Put,
   Request,
+  UseGuards,
+  UsePipes,
+  ValidationPipe,
 } from '@nestjs/common';
 import { CreateUserUseCase } from '../../../modules/user/use-cases/create-user-use-case/create-use-user-case';
 import {
@@ -21,11 +24,18 @@ import { User } from '../../../modules/user/entities/user';
 import { Public } from '../../auth/decorator/is-public';
 
 @Controller('users')
+@UsePipes(new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }))
 export class UserController {
   constructor(
     private createUserUseCase: CreateUserUseCase,
     private usersService: UsersService,
   ) {}
+
+  @Get('list')
+  @UseGuards(JwtAuthGuard, new RolesGuard('admin'))
+  async getAllUsers(): Promise<User[]> {
+    return await this.usersService.getAllUsers();
+  }
 
   @Post('create')
   @Public()
@@ -63,7 +73,6 @@ export class UserController {
     @Body() changeUserRoleDto: ChangeUserRoleDto,
     @Request() request: AuthenticatedRequestModel,
   ) {
-    console.log('entrou!!');
     console.log('Tentativa de atualização de role pelo usuário:', request.user);
     await this.usersService.changeUserRole(id, changeUserRoleDto.role);
     return { message: 'Role do usuário atualizado com sucesso.' };

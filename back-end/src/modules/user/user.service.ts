@@ -17,4 +17,8 @@ export class UsersService {
   async changeUserRole(id: string, newRole: string): Promise<User> {
     return await this.userRepository.changeRole(id, newRole);
   }
+
+  async getAllUsers(): Promise<User[]> {
+    return await this.userRepository.findAll();
+  }
 }

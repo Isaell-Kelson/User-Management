@@ -9,6 +9,7 @@ import { SignInUseCase } from '../../modules/auth/use-cases/sign-in-use-case/sig
 import { JwtModule } from '@nestjs/jwt';
 import * as process from 'node:process';
 import { JwtStrategy } from '../../modules/auth/strategies/jwt.strategy';
+import { UsersService } from '../../modules/user/user.service';
 
 @Module({
   controllers: [AuthController],
@@ -20,10 +21,16 @@ import { JwtStrategy } from '../../modules/auth/strategies/jwt.strategy';
       signOptions: { expiresIn: process.env.JWT_EXPIRE },
     }),
   ],
-  providers: [LocalStrategy, JwtStrategy, ValidateUserUseCase, SignInUseCase],
+  providers: [
+    LocalStrategy,
+    JwtStrategy,
+    ValidateUserUseCase,
+    SignInUseCase,
+    UsersService,
+  ],
 })
 export class AuthModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(SignInDtoValidateMiddleware).forRoutes('/');
+    consumer.apply(SignInDtoValidateMiddleware).forRoutes('/login');
   }
 }
