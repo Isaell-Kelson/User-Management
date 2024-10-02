@@ -18,7 +18,7 @@
       <td>{{ user.id }}</td>
       <td>
         <ng-container *ngIf="editingUserId === user.id; else viewMode">
-          <input type="text" [(ngModel)]="user.name" class="form-control"/>
+          <input type="text" [(ngModel)]="user.name" class="form-control" />
         </ng-container>
         <ng-template #viewMode>
           {{ user.name }}
@@ -26,7 +26,7 @@
       </td>
       <td>
         <ng-container *ngIf="editingUserId === user.id; else viewModeEmail">
-          <input type="email" [(ngModel)]="user.email" class="form-control"/>
+          <input type="email" [(ngModel)]="user.email" class="form-control" />
         </ng-container>
         <ng-template #viewModeEmail>
           {{ user.email }}
@@ -34,11 +34,9 @@
       </td>
       <td>{{ user.status ? 'Ativo' : 'Inativo' }}</td>
       <td>
-        <button *ngIf="editingUserId === user.id" class="btn btn-success btn-sm" (click)="saveUser(user)">Salvar
-        </button>
-        <button *ngIf="editingUserId !== user.id" class="btn btn-primary btn-sm" (click)="editUser(user)">Editar
-        </button>
-        <button class="btn btn-warning btn-sm" (click)="toggleUserStatus(user)">
+        <button *ngIf="editingUserId === user.id" class="btn btn-success btn-sm me-2" (click)="saveUser(user)">Salvar</button>
+        <button *ngIf="editingUserId !== user.id" class="btn btn-primary btn-sm me-2" (click)="editUser(user)">Editar</button>
+        <button class="btn btn-warning btn-sm me-2" (click)="toggleUserStatus(user)">
           {{ user.status ? 'Desativar' : 'Ativar' }}
         </button>
         <button class="btn btn-danger btn-sm" (click)="deleteUser(user.id)">Excluir</button>
@@ -46,8 +44,7 @@
     </tr>
     </tbody>
   </table>
-  <div *ngIf="notification" class="alert"
-       [ngClass]="{'alert-success': notification.success, 'alert-danger': !notification.success}">
+  <div *ngIf="notification" class="alert" [ngClass]="{'alert-success': notification.success, 'alert-danger': !notification.success}">
     {{ notification.message }}
   </div>
 </div>
