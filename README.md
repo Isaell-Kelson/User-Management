@@ -18,6 +18,11 @@ Este projeto é uma aplicação full stack desenvolvida utilizando **Nest.js** n
 - **Validação de Dados**: Validação de dados de entrada utilizando **class-validator** e **DTOs**.
 - **CORS**: Configurado para aceitar requisições do frontend.
 
+### Deploy
+
+- **Backend**: O deploy foi realizado no **Digital Ocean**.
+- **Frontend**: O deploy foi realizado no **Netlify**.
+
 ## Pré-requisitos
 
 - Node.js >= 18
