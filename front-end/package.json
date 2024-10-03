@@ -5,6 +5,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build --configuration production",
+    "postbuild": "cp _redirects dist/front-end/",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "serve:ssr:front-end": "node dist/front-end/server/server.mjs"
