@@ -51,7 +51,7 @@ export class LoginComponent {
     if (!this.validateFields()) return;
 
     try {
-      const response = await axios.post('https://isaellback.shop/login', {
+      const response = await axios.post('http://localhost:3000/login', {
         email: this.email,
         password: this.password
       });
@@ -81,7 +81,7 @@ export class LoginComponent {
     if (!this.validateFields()) return;
 
     try {
-      const response = await axios.post('https://isaellback.shop/users/create', {
+      const response = await axios.post('http://localhost:3000/users/create', {
         name: this.name,
         email: this.email,
         password: this.password,

@@ -18,6 +18,7 @@ interface User {
   name: string;
   email: string;
   status: boolean;
+  role: string; // Adicionar o papel do usuário
 }
 
 @Component({
@@ -39,8 +40,7 @@ export class ListAdminComponent implements OnInit {
   notification: { message: string; success: boolean } | null = null;
   editingUserId: string | null = null;
 
-  constructor() {
-  }
+  constructor() {}
 
   async ngOnInit() {
     await this.fetchUsers();
@@ -54,7 +54,7 @@ export class ListAdminComponent implements OnInit {
   async fetchUsers() {
     try {
       const token = this.getToken();
-      const response = await axios.get('https://isaellback.shop/users/list', {
+      const response = await axios.get('http://localhost:3000/users/list', {
         headers: {
           'Authorization': `Bearer ${token}`
         }
@@ -65,12 +65,13 @@ export class ListAdminComponent implements OnInit {
         name: user.props.name,
         email: user.props.email,
         status: user.props.status,
+        role: user.props.role // Incluir o papel do usuário
       }));
 
       console.log('Usuários processados:', this.users);
     } catch (error) {
       console.error('Erro ao buscar usuários:', error);
-      this.notification = {message: 'Você não é um administrador', success: false};
+      this.notification = { message: 'Você não é um administrador', success: false };
     }
   }
 
@@ -81,16 +82,16 @@ export class ListAdminComponent implements OnInit {
   async saveUser(user: User) {
     try {
       const token = this.getToken();
-      await axios.put(`https://isaellback.shop/users/${user.id}`, user, {
+      await axios.put(`http://localhost:3000/users/${user.id}`, user, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
       });
-      this.notification = {message: 'Usuário atualizado com sucesso.', success: true};
+      this.notification = { message: 'Usuário atualizado com sucesso.', success: true };
       this.editingUserId = null;
     } catch (error) {
       console.error('Erro ao atualizar usuário:', error);
-      this.notification = {message: 'Erro ao atualizar usuário', success: false};
+      this.notification = { message: 'Erro ao atualizar usuário', success: false };
     }
   }
 
@@ -98,32 +99,41 @@ export class ListAdminComponent implements OnInit {
     try {
       const updatedStatus = !user.status;
       const token = this.getToken();
-      await axios.put(`https://isaellback.shop/users/${user.id}`, {status: updatedStatus}, {
+      await axios.put(`http://localhost:3000/users/${user.id}`, { status: updatedStatus }, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
       });
       user.status = updatedStatus;
-      this.notification = {message: 'Status do usuário atualizado com sucesso.', success: true};
+      this.notification = { message: 'Status do usuário atualizado com sucesso.', success: true };
     } catch (error) {
       console.error('Erro ao atualizar o status do usuário:', error);
-      this.notification = {message: 'Erro ao atualizar o status do usuário', success: false};
+      this.notification = { message: 'Erro ao atualizar o status do usuário', success: false };
     }
   }
 
   async deleteUser(id: string) {
     try {
+      // Encontre o usuário a ser deletado
+      const user = this.users.find(u => u.id === id);
+
+      // Verifique se o usuário é admin e impeça a exclusão
+      if (user && user.role === 'admin') {
+        this.notification = { message: 'Não é possível excluir um usuário administrador.', success: false };
+        return;
+      }
+
       const token = this.getToken();
-      await axios.delete(`https://isaellback.shop/users/${id}`, {
+      await axios.delete(`http://localhost:3000/users/${id}`, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
       });
       this.users = this.users.filter(user => user.id !== id);
-      this.notification = {message: 'Usuário excluído com sucesso.', success: true};
+      this.notification = { message: 'Usuário excluído com sucesso.', success: true };
     } catch (error) {
       console.error('Erro ao excluir usuário:', error);
-      this.notification = {message: 'Erro ao excluir usuário', success: false};
+      this.notification = { message: 'Erro ao excluir usuário', success: false };
     }
   }
 }
