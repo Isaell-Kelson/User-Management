@@ -18,7 +18,7 @@ interface User {
   name: string;
   email: string;
   status: boolean;
-  role: string; // Adicionar o papel do usuário
+  role: string;
 }
 
 @Component({
@@ -65,7 +65,7 @@ export class ListAdminComponent implements OnInit {
         name: user.props.name,
         email: user.props.email,
         status: user.props.status,
-        role: user.props.role // Incluir o papel do usuário
+        role: user.props.role
       }));
 
       console.log('Usuários processados:', this.users);
@@ -114,10 +114,10 @@ export class ListAdminComponent implements OnInit {
 
   async deleteUser(id: string) {
     try {
-      // Encontre o usuário a ser deletado
+
       const user = this.users.find(u => u.id === id);
 
-      // Verifique se o usuário é admin e impeça a exclusão
+
       if (user && user.role === 'admin') {
         this.notification = { message: 'Não é possível excluir um usuário administrador.', success: false };
         return;
