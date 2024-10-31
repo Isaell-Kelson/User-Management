@@ -3,8 +3,7 @@
 Este projeto é uma aplicação full stack desenvolvida utilizando **Nest.js** no backend e **Angular** no frontend. O sistema permite o login e cadastro de usuários, além de fornecer funcionalidades de gerenciamento de contas de usuário com permissões diferenciadas para administradores e usuários comuns. Administradores têm acesso exclusivo a endpoints para atualizar e deletar outros usuários.
 
 
-!(/front-end/public/1728390774706.mp4)
-
+https://github.com/user-attachments/assets/7f1a390e-8650-4866-b346-07e8f151978c
 
 
 ## Funcionalidades
